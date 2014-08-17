@@ -7,7 +7,7 @@ as always the installtion steps is :
 
 1 - download the file .
 
-2 - upload the staff_notes folder inside plugin directory .
+2 - upload the knowledgebase folder inside plugin directory .
 
 3 - goto plugins , and install knowledge base .
 
