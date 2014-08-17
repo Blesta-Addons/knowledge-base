@@ -1,0 +1,133 @@
+/* Knowledge Base Plugin */
+.sub .sub_1 {
+    padding: 0px 10px;
+    height: 16px;
+    background: url('../images/arrow06.gif') no-repeat scroll 0% 0% transparent;	
+}
+.sub_sub .sub_2 {
+    padding: 0px 10px;
+    height: 16px;
+	margin: 0px 0px 0px 20px;
+    background: url('../images/arrow06.gif') no-repeat scroll 0% 0% transparent;
+}
+
+/*** client side ***/
+aside  li {
+    border-bottom: 1px solid #E1E1E1;
+}
+
+aside li a {
+    display: block;
+    padding: 16px 30px;
+    text-decoration: none;
+    color: #9E9E9E;
+    font-size: 17px;
+    transition: all 0.2s ease-in-out 0s;
+}
+aside  li a:hover {
+    background: none repeat scroll 0% 0% #ecf7ff;
+    color: #454545;
+}
+
+aside li a.active {
+    background-color: #F7F7F7;
+    color: #454545;
+}
+aside  li ul, aside  li ol {
+    border-top: 1px solid #F7F7F7;
+    overflow: hidden;
+    max-height: 0px;
+}
+aside li ul.open {
+    max-height: 999px !important;
+    border-top: 1px solid #E1E1E1;
+    z-index: 10;
+}
+
+.knowledgebase  .panel {
+	border: 1px solid transparent;
+	border-color: #DDD;
+}
+.knowledgebase  .list-group-item {
+    margin-bottom: 0px;
+    border: 1px solid #DDD;
+}
+.knowledgebase  li{
+	list-style: none;
+}
+.list-group  ul .sub_1 {
+    padding: 0px 10px;
+    height: 16px;
+    background: url('../images/arrow06.gif') no-repeat scroll 0% 0% transparent;	
+}
+.list-group  ul .sub_2 {
+    padding: 0px 10px;
+    height: 16px;
+	margin: 0px 0px 0px 20px;
+    background: url('../images/arrow06.gif') no-repeat scroll 0% 0% transparent;
+}
+.kbcategorytitlecontainer {
+    margin: 0px !important;
+}
+.kbcategorytitle {
+    border-bottom: 1px solid #e4e4e4;
+    color: #0a69c5;
+    cursor: pointer;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 2px 0px 5px 5px;
+    vertical-align: bottom;
+}
+.kbcategorycount {
+    color: #9fa3a8;
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+.kbcategorytitle .kbcategorycount {
+    color: #545454;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-left: 4px;
+}
+.kbcategoryicon  {
+    background: url("../images/folder-horizontal-open.png") no-repeat scroll 0 3px rgba(0, 0, 0, 0);
+	height: 20px;
+	padding: 10px !important;
+	margin: 0px 5px !important;
+}
+/*
+.popular_article {
+    margin: 0 12px 0 0; 
+}
+*/
+.knowledgebase .popular_article  ol {
+    margin-bottom: 20px;
+    padding-right: 16px;	
+}
+.knowledgebase .popular_article  ol li {
+    list-style-type: decimal-leading-zero;
+	border-bottom: 1px solid #E4E4E4;
+	line-height: 2em !important;
+}
+/*
+.latest_article {
+    margin: 0 12px 0 0; 
+}
+*/
+.knowledgebase .latest_article  ol {
+    margin-bottom: 20px;
+    padding-right: 0px;	
+}
+.knowledgebase .latest_article  ol li {
+	border-bottom: 1px solid #E4E4E4;
+	line-height: 2em !important;
+}
+.knowledgebase .latest_article  ol  li  .article {
+    padding: 0px 10px;
+    height: 16px;
+	margin: 6px 0px 0px 10px;
+    background: url('../images/document.png') no-repeat scroll 0% 0% transparent;
+}

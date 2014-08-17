@@ -1,0 +1,121 @@
+		<?php
+		echo $this->Html->ifSet($message);		
+		$tabs = array(
+			array('name' => $this->_("KnowledgebasePlugin.index.settings", true), 'current'=>($this->Html->ifSet($status) == "settings" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/settings/")),		
+			array('name' => $this->_("KnowledgebasePlugin.index.articles", true) . " <span>(" . $this->Html->ifSet($articles, true) . ")</span>",  'current'=>($this->Html->ifSet($status) == "articles" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/articles/" )),
+			array('name' => $this->_("KnowledgebasePlugin.index.categories", true) . " <span>(" . $this->Html->ifSet($categories, true) . ")</span>", 'current'=>($this->Html->ifSet($status) == "categories" ? true : false), 'attributes' => array('href' =>  $this->base_uri . "plugin/knowledgebase/admin_main/categories/" )),
+			array('name' => $this->_("KnowledgebasePlugin.index.permissions", true), 'current'=>($this->Html->ifSet($status) == "permissions" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/permissions/"))
+		);		
+				
+		$link_buttons = array(
+			array('name'=>$this->_("KnowledgebasePlugin.index.add_article", true),  'attributes'=>array('href'=> $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/addarticle/" . (!empty($category) ? "/" . $this->Html->ifSet($category->id) : "")) , 'class'=>"add_download")),
+			array('name'=>$this->_("KnowledgebasePlugin.index.add_category", true), 'attributes'=>array('href'=> $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/addcategory/" . (!empty($category) ? "/" . $this->Html->ifSet($category->id) : "")), 'class'=>"add_download"))
+		);
+				
+		$this->Widget->clear();
+		$this->Widget->setLinks($tabs);
+		$this->Widget->setLinkButtons($link_buttons);				
+		$this->Widget->setStyleSheet($this->view_dir . "css/styles.css");
+		$this->Widget->create($this->_("KnowledgebasePlugin.categories.boxtitle_categories", true), array('id'=>"categories"), $this->Html->ifSet($render_section, null));
+		?>
+		
+		<?php
+		if ($this->Html->ifSet($lescategories, false) && $lescategories > 0) {		
+		?>
+		<table class="table" id="article">
+			<tr class="heading_row">
+				<td>&nbsp;</td>
+				<td><span><?php $this->_("KnowledgebasePlugin.categories.heading_category_name");?></span></td>
+				<td><span><?php $this->_("KnowledgebasePlugin.categories.heading_description");?></span></td>		
+				<td class="last"><span><?php $this->_("KnowledgebasePlugin.categories.heading_options");?></span></td>
+			</tr>
+			<?php
+			// Display all categories
+			foreach ($this->Html->ifSet($lescategories, array()) as $link => $value) {
+				if (!$this->Html->ifSet($value->parent_id)) {
+				?>
+					<tr class="odd_row expand parent_cat_<?php $this->Html->_($value->id);?>">
+						<td class="icon"><div class="active"></div></td>
+						<td><?php $this->Html->_($value->name);?></td>
+						<td><?php $this->Html->_($value->description);?></td>
+						<td class="last">
+							<a href="<?php echo $this->Html->safe($this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/editcategory/" . $this->Html->ifSet($value->id) . "/"));?>"><?php $this->_("KnowledgebasePlugin.categories.edit");?></a>,
+							<?php
+							$this->Form->create($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory");
+							$this->Form->fieldHidden("id", $this->Html->_($value->id, true));
+							?>
+							<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory/" . $this->Html->ifSet($value->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("KnowledgebasePlugin.modal.delete_category", true));?>"><?php $this->_("KnowledgebasePlugin.categories.delete");?></a>
+							<?php
+							$this->Form->end();
+							?>
+						</td>
+					</tr>
+					<?php
+					if ($this->Html->ifSet($value->children) && is_array($value->children)) {
+						foreach ($value->children as $sub_link => $sub_value) {
+						?>
+						<tr class="sub <?php $this->Html->_($value->id);?> ">
+							<td></td>
+							<td><span class="sub_1"></span><?php $this->Html->_($sub_value->name);?></td>
+							<td><?php $this->Html->_($sub_value->description);?></td>
+							<td class="last">
+								<a href="<?php echo $this->Html->safe($this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/editcategory/" . $this->Html->ifSet($sub_value->id) . "/"));?>"><?php $this->_("KnowledgebasePlugin.categories.edit");?></a>,
+								<?php
+								$this->Form->create($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory");
+								$this->Form->fieldHidden("id", $this->Html->_($sub_value->id, true));
+								?>
+								<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory/" . $this->Html->ifSet($sub_value->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("KnowledgebasePlugin.modal.delete_category", true));?>"><?php $this->_("KnowledgebasePlugin.categories.delete");?></a>
+								<?php
+								$this->Form->end();
+								?>
+							</td>	
+						</tr>
+							<?php
+							if ($this->Html->ifSet($sub_value->children) && is_array($sub_value->children)) {
+								foreach ($sub_value->children as $sub_sub_link => $sub_sub_value) {
+								?>
+								<tr class="sub_sub <?php $this->Html->_($sub_value->id);?>">
+									<td></td>
+									<td><span class="sub_2"></span><?php $this->Html->_($sub_sub_value->name);?></td>
+									<td><?php $this->Html->_($sub_sub_value->description);?></td>
+									<td class="last">
+										<a href="<?php echo $this->Html->safe($this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/editcategory/" . $this->Html->ifSet($sub_sub_value->id) . "/"));?>"><?php $this->_("KnowledgebasePlugin.categories.edit");?></a>,
+										<?php
+										$this->Form->create($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory");
+										$this->Form->fieldHidden("id", $this->Html->_($sub_sub_value->id, true));
+										?>
+										<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/deletecategory/" . $this->Html->ifSet($sub_sub_value->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("KnowledgebasePlugin.modal.delete_category", true));?>"><?php $this->_("KnowledgebasePlugin.categories.delete");?></a>
+										<?php
+										$this->Form->end();
+										?>
+									</td>		
+								</tr>					
+								<?php
+								}
+							}
+						}
+					}				
+				}
+			}
+			?>
+		</table>
+		<?php
+		}	
+		else {
+		?>
+			<div class="empty_section">
+				<div class="empty_box"><?php $this->_("KnowledgebasePlugin.next_version");?></div>
+			</div>
+
+		<?php
+		}
+		?>			
+
+		<?php
+		$this->Widget->end();
+		?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#article a.manage[rel]').blestaModalConfirm({base_url: '<?php echo $this->Html->safe($this->base_uri);?>', close: '<?php $this->_("AppController.modal.text_close");?>', submit: true});
+	});
+</script>

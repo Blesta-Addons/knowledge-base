@@ -1,0 +1,28 @@
+		<?php
+		echo $this->Html->ifSet($message);		
+		$tabs = array(
+			array('name' => $this->_("KnowledgebasePlugin.index.settings", true), 'current'=>($this->Html->ifSet($status) == "settings" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/settings/")),		
+			array('name' => $this->_("KnowledgebasePlugin.index.articles", true) . " <span>(" . $this->Html->ifSet($articles, true) . ")</span>",  'current'=>($this->Html->ifSet($status) == "articles" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/articles/" )),
+			array('name' => $this->_("KnowledgebasePlugin.index.categories", true) . " <span>(" . $this->Html->ifSet($categories, true) . ")</span>", 'current'=>($this->Html->ifSet($status) == "categories" ? true : false), 'attributes' => array('href' =>  $this->base_uri . "plugin/knowledgebase/admin_main/categories/" )),
+			array('name' => $this->_("KnowledgebasePlugin.index.permissions", true), 'current'=>($this->Html->ifSet($status) == "permissions" ? true : false), 'attributes' => array('href' => $this->base_uri . "plugin/knowledgebase/admin_main/permissions/"))
+		);		
+				
+		$link_buttons = array(
+			array('name'=>$this->_("KnowledgebasePlugin.index.add_article", true),  'attributes'=>array('href'=> $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/addarticle/" . (!empty($category) ? "/" . $this->Html->ifSet($category->id) : "")) , 'class'=>"add_download")),
+			array('name'=>$this->_("KnowledgebasePlugin.index.add_category", true), 'attributes'=>array('href'=> $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/addcategory/" . (!empty($category) ? "/" . $this->Html->ifSet($category->id) : "")), 'class'=>"add_download"))
+		);
+				
+		$this->Widget->clear();
+		$this->Widget->setLinks($tabs);
+		$this->Widget->setLinkButtons($link_buttons);				
+		$this->Widget->setStyleSheet($this->view_dir . "css/styles.css");
+		$this->Widget->create($this->_("KnowledgebasePlugin.settings.boxtitle_settings", true), array('id'=>"articles"), $this->Html->ifSet($render_section, null));
+		?>
+		
+		<div class="empty_section">
+			<div class="empty_box"><?php $this->_("KnowledgebasePlugin.next_version");?></div>
+		</div>
+
+		<?php
+		$this->Widget->end();
+		?>

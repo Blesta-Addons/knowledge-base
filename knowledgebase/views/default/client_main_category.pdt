@@ -1,0 +1,228 @@
+
+			<?php
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+				?>
+				<div class="col-md-12">
+				<?php
+			}
+					echo $this->Html->ifSet($message);
+					
+					$this->WidgetClient->clear();
+					$this->WidgetClient->setStyleSheet($this->view_dir . "css/styles.css", array('id' => "knowledgebase_styles"));				
+					$this->WidgetClient->create($this->_("ClientMain.category.boxtitle_directory", true, $this->Html->ifSet($category->name)), array('id'=>"knowledgebase_client_main_category"), $this->Html->ifSet($render_section, null));
+					$this->WidgetClient->startBody();
+					?>
+					<div class="knowledgebase">
+						<aside>		
+							<div class="col-md-3 ">				
+								<div class="panel panel-default" id="accordion">
+									<ul class="list-group">		
+										<li>
+											<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/");?>" " >
+												<?php $this->_("ClientMain.category.root_directory");?>
+												<span class="pull-right">
+													<span class="glyphicon glyphicon-home"></span>
+												</span>	
+											</a>								
+										</li>								
+										<?php
+										if (!empty($lescategories)) {
+									
+											$i = 0;
+											foreach ($this->Html->ifSet($lescategories, array()) as $link => $value) {
+												if (!$this->Html->ifSet($value->parent_id)) {									
+													if ($this->Html->ifSet($value->children) && is_array($value->children)) {
+														$herf = " data-toggle='collapse' data-parent='#accordion' href='#collapse_". $this->Html->ifSet($value->id) ."'  ";	
+												
+														$has_sub =
+															'<span class="pull-right">
+																	<span class="glyphicon glyphicon-collapse-down"></span>
+															</span>' ;										
+													}	
+													else {
+														$herf = " href='" . $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($value->id) . "/") ."' class=' ".$this->Html->ifSet($active)." ' ";
+														$has_sub = "" ;
+													}
+													?>
+													<li>
+														<a <?php echo $herf ;?> >
+															<?php $this->Html->_($value->name);?>
+															<?php echo $has_sub ;?>
+														</a>								
+													</li>
+										
+													<?php
+													if ($this->Html->ifSet($value->children) && is_array($value->children)) {
+														?>
+														<ul id="collapse_<?php echo $this->Html->_($value->id);?>" class="panel-collapse collapse " >									
+														<?php
+														foreach ($value->children as $sub_link => $sub_value) {
+															?>
+															<li>
+																<span class="pull-left sub_1"></span>
+																<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($sub_value->id) . "/");?>" class="list-group-item <?php $this->Html->ifSet($active);?>" >
+																	<span class="badge pull-right"></span>
+																	<span class="pull-left sub_1"></span>
+																	<?php $this->Html->_($sub_value->name);?>
+																</a>							
+															</li>
+															<?php
+														}
+												
+														if ($this->Html->ifSet($sub_value->children) && is_array($sub_value->children)) {
+															?>
+															<ul >									
+															<?php
+															foreach ($sub_value->children as $sub_link => $sub_sub_value) {
+																?>
+																<li>
+																	<span class="pull-left sub_1"></span>
+																	<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($sub_sub_value->id) . "/");?>" class="list-group-item <?php $this->Html->ifSet($active);?>" >
+																		<span class="badge pull-right"></span>
+																		<span class="pull-left sub_2"></span>
+																		<?php $this->Html->_($sub_sub_value->name);?>
+																	</a>							
+																</li>
+																<?php
+															}	
+															?>
+															</ul >									
+															<?php									
+														}	
+														?>
+														</ul >									
+														<?php
+													}
+												}
+											}
+											unset($i);
+										}
+										else {
+											?>
+											<div class="alert alert-info">
+												<p><?php $this->_("ClientMain.index.no_categories");?></p>
+											</div>
+											
+											<?php
+										}
+										?>
+									</ul>
+								</div>
+							</div>
+						</aside>
+						<div class="col-md-9 ">
+							<ol class="breadcrumb">
+								<li>
+									<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/index/");?>">
+										<?php $this->_("ClientMain.index.root_directory");?>
+									</a>
+								</li>							
+								<?php
+								if (!empty($category->parent_id)) {
+									?>
+									<li>
+										<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($parent_cat->id) . "/");?>">
+											<?php $this->Html->_($parent_cat->name);?> 
+										</a>			
+									</li>	
+									<?php
+								}
+								?>							
+								<li  class="active" >
+									<?php $this->Html->_($category->name);?> 			
+								</li>						
+							</ol>
+							<div class="well">	
+								<div class="page-header">
+									<h1>
+										<?php $this->Html->_($category->name);?>
+										<?php
+										if (!empty($category->description))
+											echo '<small>' . $this->Html->_($category->description, true) .'</small>' ;
+										?>	
+									</h1>				
+								</div>
+							</div>	
+							<?php
+							if (!empty($sub_cat)) {
+								?>	
+								<h4><span class="label label-default"><?php $this->_("ClientMain.category.sub_categories");?></span></h4>
+					
+							
+								<?php					
+								$i = 0;
+								foreach ($this->Html->ifSet($sub_cat , array()) as $link => $value) {
+									?>
+									<div class="col-md-6">
+										<div class="kbcategorytitlecontainer">
+											<div class="kbcategorytitle" onclick="javascript: window.location.href='<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($value->id) . "/");?>';">
+												<span class="kbcategoryicon pull-left"> </span>
+												<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/category/" . $this->Html->ifSet($value->id) . "/");?>"><?php $this->Html->_($value->name);?> </a>
+												<span class="kbcategorycount pull-right">(+)</span>
+											</div>
+										</div>
+									</div>
+									<?php
+									if ($i++%2 == 1) {
+										?>
+										<div class="clearfix">&nbsp;</div>
+										<?php
+									}
+								}
+								unset($i);
+							}					
+							?>
+							<div class="clearfix">&nbsp;</div>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> </div>
+							</div>
+							
+							<?php
+							if (!empty($lesarticles)) {
+								?>					
+								
+								<div class="latest_article">
+									<h4><span class="label label-default"><?php $this->_("ClientMain.category.articles");?></span></h4>
+									<ol>	
+										<?php
+										// Display all articles
+										for ($i=0; $i<count($lesarticles); $i++) {
+											?>						
+												<li>
+													<span class="pull-left article"></span>
+													<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/client_main/article/" . $this->Html->ifSet($lesarticles[$i]->id) . "/");?>" ><?php $this->Html->_($lesarticles[$i]->title);?></a>
+													<span class="pull-right "><span class="glyphicon glyphicon-time"></span> <?php echo date("d-m-Y", strtotime($lesarticles[$i]->date_added));?></span>
+												</li>
+											<?php
+										}
+										?>					
+									</ol>
+								</div>								
+								<?php
+							}
+							else {
+								?>
+								<div class="col-md-12">
+									<h3><?php $this->_("ClientMain.category.articles");?></h3>
+									<div class="alert alert-info">
+										<p><?php $this->_("ClientMain.category.no_articles");?></p>
+									</div>
+								</div>
+								<?php
+							}
+							?>							
+						</div>
+					</div>
+	
+					<?php
+					$this->WidgetClient->endBody();
+					$this->WidgetClient->end();
+				
+			// Don't show this container when only rendering the widget section
+			if (!$this->Html->ifSet($render_section)) {
+					?>
+				</div>
+				<?php
+			}
+			?>

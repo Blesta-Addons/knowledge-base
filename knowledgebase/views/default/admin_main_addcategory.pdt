@@ -1,0 +1,38 @@
+		<?php
+		echo $this->Html->ifSet($message);
+		$widget_title = $this->_("KnowledgebasePlugin.addcategory.boxtitle_root", true, $this->_("KnowledgebasePlugin.!text.root_directory", true));
+		if (!empty($category))
+			$widget_title = $this->_("KnowledgebasePlugin.addcategory.boxtitle_addcategory", true, $this->Html->ifSet($category->name));			
+			
+		$this->Widget->clear();
+		$this->Widget->create($widget_title);
+		
+		$this->Form->create();
+		?>
+		<div class="inner">
+			<div class="pad">
+				<ul>
+					<li>
+						<?php $this->Form->label($this->_("KnowledgebasePlugin.addcategory.parent_id", true));?>
+						<?php $this->Form->fieldSelect("parent_id", array(''=>$this->_("KnowledgebasePlugin.select.please", true) , ''=>$this->_("KnowledgebasePlugin.select.none", true)  ) + $this->Html->ifSet($vars['parent_id']) , $this->Html->ifSet($vars['vars']->parent_id), array("id"=>"parent_id"));?>
+					</li>				
+					<li>
+						<?php $this->Form->label($this->_("KnowledgebasePlugin.addcategory.field_name", true));?>
+						<?php $this->Form->fieldText("name", $this->Html->ifSet($vars['vars']->name), array('id'=>"name"));?>
+					</li>
+					<li>
+						<?php $this->Form->label($this->_("KnowledgebasePlugin.addcategory.field_description", true));?>
+						<?php $this->Form->fieldTextarea("description", $this->Html->ifSet($vars['vars']->description), array('id'=>"description", 'class'=>"small"));?>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="button_row">
+				<a class="btn_right submit" href="#"><?php $this->_("KnowledgebasePlugin.addcategory.submit_add");?></a>
+				<a class="btn_right" href="<?php echo $this->base_uri . "plugin/knowledgebase/admin_main/categories/";?>"><?php $this->_("KnowledgebasePlugin.addcategory.submit_cancel");?></a>
+			</div>
+		</div>
+		<?php
+		$this->Form->end();
+		$this->Widget->end();
+		?>

@@ -1,0 +1,15 @@
+{
+	"version": "1.0.0",
+	"name": "KnowledgebasePlugin.name" ,
+	"description": "A very clean and simple knowledgebase plugin for Blesta . ",
+	"authors": [
+		{
+			"name": "Mohamed Anouar Achoukhy - Naja7Host SARL ",
+			"url": "http://www.naja7host.com"
+		},
+        {
+			"name": ".:: Support us  , donate by PayPal ::. ",
+			"url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2FQKWFL73CV9N"
+		}
+    ]
+}

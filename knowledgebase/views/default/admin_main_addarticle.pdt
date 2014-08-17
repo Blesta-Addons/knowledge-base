@@ -1,0 +1,61 @@
+		<?php
+		echo $this->Html->ifSet($message);
+		
+		$widget_title = $this->_("KnowledgebasePlugin.addarticle.boxtitle_addarticle", true);
+			
+		$this->Widget->clear();
+		$this->Widget->create($widget_title);
+		
+		$this->Form->create(null, array('id' => "add_article", 'enctype' => "multipart/form-data"));
+		?>
+		<div class="inner">
+			<div class="pad">
+				<ul>
+					<li>
+						<?php $this->Form->label($this->_("KnowledgebasePlugin.addarticle.category_id", true), "category_id");?>
+						<?php $this->Form->fieldSelect("category_id", array( ''=>$this->_("KnowledgebasePlugin.select.please", true)  ) + $this->Html->ifSet($vars['category_id']) , $this->Html->ifSet($vars['vars']->category_id), array("id"=>"category_id"));?>
+					</li>				
+					<li>
+						<?php $this->Form->label($this->_("KnowledgebasePlugin.addarticle.title", true), "title");?>
+						<?php $this->Form->fieldText("title", $this->Html->ifSet($vars['vars']->title), array('id' => "title"));?>
+					</li>
+					<li>
+						<h4><a href="#" ><?php $this->_("KnowledgebasePlugin.addarticle.body");?></a></h4>
+						<?php
+						$show_description = (!empty($vars->description) || !empty($vars->description_html));
+						$current_text_description = (!empty($vars->description) && empty($vars->description_html));
+						?>						
+						<div id="description_content" class="pad_top">
+							<div class="tab_content">
+								<ul class="tabs">
+									<li<?php echo !$current_text_description ? " class=\"current\"" : "";?>>
+										<a href="#"><?php $this->Form->label($this->_("KnowledgebasePlugin.addarticle.field_description_html", true), "body_html");?></a>
+									</li>
+								</ul>
+								<div class="inner_content">
+									<div><?php $this->Form->fieldTextarea("body", $this->Html->ifSet($vars['vars']->body), array('id'=>"body", 'class'=>"wysiwyg"));?></div>
+								</div>
+							</div>
+						</div>									
+					</li>
+				</ul>
+			</div>
+			
+			<div class="button_row">
+				<a class="btn_right submit" href="#"><?php $this->_("KnowledgebasePlugin.addarticle.submit_add");?></a>
+				<a class="btn_right" href="<?php echo $this->Html->safe($this->base_uri . "plugin/knowledgebase/admin_main/articles/");?>"><?php $this->_("KnowledgebasePlugin.addarticle.submit_cancel");?></a>
+			</div>
+		</div>
+		<?php
+		$this->Form->end();
+		$this->Widget->end();
+		?>
+		
+		<?php
+		$this->Javascript->setInline("
+		$(document).ready(function() {		
+			$('textarea.wysiwyg').ckeditor(function() {}, {language: '" . substr(Configure::get("Blesta.language"), 0, 2) . "'});
+			$('div.tab_content').blestaTabbedContent();
+		});
+		");
+		?>

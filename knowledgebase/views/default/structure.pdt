@@ -1,0 +1,12 @@
+
+				<aside id="left_container">
+				Test 
+				</aside>
+				<div id="right_outer">
+					<section id="right_container">
+						<?php echo $this->Html->ifSet($message);?>
+						<div class="column section1">
+							<?php echo $this->Html->ifSet($content);?>
+						</div>
+					</section>
+				</div>
