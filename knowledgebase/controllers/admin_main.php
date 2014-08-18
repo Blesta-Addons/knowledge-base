@@ -22,7 +22,7 @@ class AdminMain extends AppController {
         // Require login
         $this->requireLogin();
 
-		Language::loadLang("knowledgebase_plugin", null, PLUGINDIR . "knowledgebase" . DS . "language" . DS);
+		Language::loadLang("admin_main", null, PLUGINDIR . "knowledgebase" . DS . "language" . DS);
 
 		$this->uses(array("Knowledgebase.KnowledgebaseCategories", "Knowledgebase.KnowledgebaseArticles", "Knowledgebase.Knowledgebase"));
 		
