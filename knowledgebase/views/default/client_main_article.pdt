@@ -149,7 +149,7 @@
 								?>					
 								
 								<div class="article_view">
-									<?php echo $this->TextParser->encode("markdown", $this->Html->safe($article->body, true));?>
+									<?php echo $this->TextParser->encode("markdown", $article->body );?>
 								</div>								
 								<?php
 							}
