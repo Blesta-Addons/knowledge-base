@@ -93,7 +93,7 @@ class KnowledgebaseArticles extends knowledgebaseModel {
 	
 		$fields = array(
 			"kb_articles.*",
-			"kb_categories.name"=>"category_name" , "kb_categories.id"
+			"kb_categories.name"=>"category_name" , "kb_categories.id"=>"category_id" 
 		);
 		
 		return $this->Record->select($fields)->from("kb_articles")->
