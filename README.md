@@ -13,4 +13,4 @@ as always the installtion steps is :
 
 4 - enjoy the free content .
 
-~Current Version:1.0.0~
+~Current Version:1.0.1~
