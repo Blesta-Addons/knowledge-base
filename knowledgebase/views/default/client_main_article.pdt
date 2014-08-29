@@ -149,7 +149,7 @@
 								?>					
 								
 								<div class="article_view">
-									<?php echo $this->TextParser->encode("markdown", $article->body );?>
+									<?php echo $this->Html->ifSet($article->body)  ;?>
 								</div>								
 								<?php
 							}
